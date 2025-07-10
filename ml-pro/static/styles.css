@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('../static/background.jpg') no-repeat center center/cover;
+    position: relative;
+}
+    
+    /* Dark overlay for readability */
+    body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+    
+    /* Container (Glassmorphism effect) */
+.container {
+    width: 350px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(1px);
+    transition: transform 0.1s ease-in-out;
+}
+    
+.container:hover {
+    transform: scale(1.02);
+}
+    
+/* Input Fields */
+input {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+    
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+    
+input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+    
+button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+    
+/* Toggle Links */
+p {
+    margin-top: 10px;
+    color: #fff;
+}
+    
+a {
+    color: #00c3ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+    
+a:hover {
+    text-decoration: underline;
+}
+    
+/* Hidden Class for Form Toggle */
+.hidden {
+    display: none;
+}
+    

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Image</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        body::before {
+            background: white;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 450px;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            color:Black;
+            margin: 15px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        }
+        img {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .btn-group button {
+            flex: 1;
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter a Description</h2>
+        <input type="text" id="text-input" placeholder="Describe the image...">
+        <button onclick="generateImage()">Generate Image</button>
+        <img id="output-image">
+        <div class="btn-group">
+            <button onclick="location.href='ml-features.html'">Back</button>
+        </div>
+    </div>
+
+    <script>
+        async function generateImage() {
+            const prompt = document.getElementById('text-input').value;
+            if (!prompt) {
+                alert("Please enter a description.");
+                return;
+            }
+
+            try {
+                let response = await fetch("http://127.0.0.1:5000/generate-image", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt })
+                });
+
+                let result = await response.json();
+
+                if (result.generated_image_base64) {
+                    let img = document.getElementById("output-image");
+                    img.src = result.generated_image_base64;
+                    img.style.display = "block";
+                } else {
+                    alert("Error generating image. Try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Server error. Make sure Flask is running.");
+            }
+        }
+    </script>
+</body>
+</html>

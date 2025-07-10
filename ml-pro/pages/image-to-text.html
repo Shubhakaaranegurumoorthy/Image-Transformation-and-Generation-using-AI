@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Text</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        body::before {
+            background: white;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 450px;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        input[type="file"] {
+            width: 70%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        }
+        p {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .btn-group button {
+            flex: 1;
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload an Image</h2>
+        <input type="file" id="image-input" accept="image/*">
+        <button onclick="generateCaption()">Generate Caption</button>
+        <p id="output-text"></p>
+        <div class="btn-group">
+            <button onclick="location.href='ml-features.html'">Back</button>
+        </div>
+    </div>
+
+    <script>
+        async function generateCaption() {
+            const fileInput = document.getElementById('image-input');
+            if (!fileInput.files.length) {
+                alert("Please select an image.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("image", fileInput.files[0]);
+
+            try {
+                let response = await fetch("http://127.0.0.1:5000/image-to-text", {
+                    method: "POST",
+                    body: formData
+                });
+
+                let result = await response.json();
+
+                if (result.caption) {
+                    document.getElementById("output-text").innerText = "Caption: " + result.caption;
+                } else {
+                    alert("Error generating caption. Try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Server error. Make sure Flask is running.");
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Colorization</title>
+  <link rel="stylesheet" href="../static/styles.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    body::before {
+            background: white;
+        }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 450px;
+    }
+    h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+    input[type="file"] {
+      width: 70%;
+      padding: 10px;
+      margin: 15px 0;
+      border: 2px dashed #ccc;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    }
+    img {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .btn-group a, .btn-group button {
+      flex: 1;
+      margin: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload a Black & White Image</h2>
+    <input type="file" id="image-input" />
+    <button onclick="colorizeImage()">Colorize</button>
+    <img id="output-image" />
+    <div class="btn-group">
+      <a id="download" download="picto-bot.png"><button>Download</button></a>
+      <button onclick="location.href='ml-features.html'">Back</button>
+    </div>
+  </div>
+  <script>
+    function colorizeImage() {
+      const input = document.getElementById("image-input").files[0];
+      if (!input) {
+        alert("Please select an image.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', input);
+
+      fetch("http://127.0.0.1:5000/colorize", {
+        method: "POST",
+        body: formData
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.image) {
+            document.getElementById("output-image").src = "data:image/jpeg;base64," + data.image;
+            document.getElementById("download").href = "data:image/jpeg;base64," + data.image;
+          } else {
+            alert("Failed to generate image.");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  </script>
+</body>
+</html>

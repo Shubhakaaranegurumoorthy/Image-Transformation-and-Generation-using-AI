@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Features</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        body::before {
+            background: white;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 450px;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        }
+        .logout {
+            background: #dc3545;
+            margin-top: 15px;
+        }
+        .logout:hover {
+            background: #b02a37;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>AI FEATURES</h2>
+        <div class="feature-grid">
+            <button onclick="location.href='colorization.html'">Colorization</button>
+            <button onclick="location.href='decolorization.html'">Decolorization</button>
+            <button onclick="location.href='text-to-image.html'">Text to Image</button>
+            <button onclick="location.href='image-to-text.html'">Image to Text</button>
+        </div>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>
