@@ -25,7 +25,9 @@ Card-style UI listing all available ML features
 Clicking on a module redirects to its dedicated page
 
 ## 🎨2.1 Colorization
-Purpose: Convert black and white photos into color using AIInput: Upload grayscale image
+Purpose: Convert black and white photos into color using AI.
+
+Input: Upload grayscale image
 
 Backend: Uses DeOldify or similar models via Replicate API.
 
